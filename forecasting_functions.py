@@ -1,5 +1,17 @@
 # William Zarzour
 # 3/30/2023
+from financial_statements import *
+
+def average_account_calculation(data):
+    '''Calculates average of 4yrs + TTM. yes adding TTM probably skews data as it is duplicating 9 months of data. '''
+    average_data = data
+    #data.iloc[startr:stopr:stepr,startc:stopc:stepc] looking for the index range 3-15
+    accounts = average_data.iloc[3:15:,0:6]
+    account_averages = accounts.mean(axis=1)
+    average_data["mean"] = account_averages
+    return average_data
+
+
 
 def customer_growth_calculation(initial_customers,customers_per_year,num_years):
     '''Creates a list of annual customers using initial customers and an increase or decrease of customers per year.
@@ -12,17 +24,6 @@ def customer_growth_calculation(initial_customers,customers_per_year,num_years):
         customer_assumptions.append(initial_customers+customers_per_year*(year-1))
     return customer_assumptions
 
-def revenue_calculation(customers, customer_churn_rate,price_per_user):
-    '''Creates a list of annual revenue using price per user and changes in customer.
-    
-    Parameters -> [float]
-    returns -> [float]'''
-
-    revenue = []
-    for customer in customers:
-        rev_per_customer=customer*(1-customer_churn_rate)*12*price_per_user
-        revenue.append(rev_per_customer)
-    return revenue
 
 def calculate_annual_fc(fixed_costs,num_years,total=False):
     '''Creates a list of annual fixed costs.

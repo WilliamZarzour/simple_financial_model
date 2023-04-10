@@ -54,11 +54,4 @@ def standardize_income_statement(data):
     return simplified_income_statement
 
 
-aapl=initialize_ticker("tsla")
-data = get_income_statement(aapl)
-income_statement = standardize_income_statement(data)
-print(income_statement)
-
-
-
 
