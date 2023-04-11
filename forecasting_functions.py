@@ -2,6 +2,8 @@
 # 3/30/2023
 from financial_statements import *
 
+
+
 def average_account_calculation(data):
     '''Calculates average of 4yrs + TTM. yes adding TTM probably skews data as it is duplicating 9 months of data. '''
     average_data = data
@@ -11,6 +13,13 @@ def average_account_calculation(data):
     average_data["mean"] = account_averages
     return average_data
 
+def growth_rate_calculation(data):
+    '''Determines the average growth rate across the 4 year period based on the % change excluding TTM. Returns dictionary with account name as key and value as growth rate with type float.'''
+    accounts = data.iloc[3:15:,0:4]
+    percent_change_data = accounts.pct_change(axis="columns")
+    account_averages = percent_change_data.mean(axis=1)
+    growth_averages=account_averages.to_dict()
+    return growth_averages
 
 
 def customer_growth_calculation(initial_customers,customers_per_year,num_years):
