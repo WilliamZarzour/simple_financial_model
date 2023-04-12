@@ -23,18 +23,7 @@ def get_balance_sheet(ticker):
     balance_data = ticker.balance_sheet()
     return balance_data
 
-def standardize_income_statement(data):
-    '''Function that transposes the unsorted income statement financials into a sorted and simplified income statement into a dictionary where the columns are represented by the columns
-    and the values represent the respective column's values.
-
-    returns df
-
-    Uses yahoo's standard format, incomplete financials on yahoo's end may result in not working??
-
-    '''
-    
-    #check if other statements result in the same columns and info. If so POG if not, adapt the dataframe to be standardized. 
-    data = data.transpose()
+def income_statement_accounts():
     accounts=["asOfDate",
                 "periodType",
                 "currencyCode",
@@ -50,7 +39,23 @@ def standardize_income_statement(data):
                 "PretaxIncome",
                 "TaxProvision",
                 "NetIncomeCommonStockholders"]
+    return accounts
+
+def standardize_income_statement(data):
+    '''Function that transposes the unsorted income statement financials into a sorted and simplified income statement into a dictionary where the columns are represented by the columns
+    and the values represent the respective column's values.
+
+    returns df
+
+    Uses yahoo's standard format, incomplete financials on yahoo's end may result in not working??
+
+    '''
+    
+    #check if other statements result in the same columns and info. If so POG if not, adapt the dataframe to be standardized. 
+    data = data.transpose()
+    accounts=income_statement_accounts()
     simplified_income_statement=data.loc[accounts]
+    simplified_income_statement=simplified_income_statement.iloc[:, :-1]
     return simplified_income_statement
 
 
